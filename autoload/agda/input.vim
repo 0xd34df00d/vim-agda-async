@@ -210,6 +210,11 @@ function s:popup_filter(popup, key)
     return 1
   endif
 
+  if a:key ==# "\<Space>"
+    call s:commit()
+    return 0
+  endif
+
   return 0
 endfunction
 
