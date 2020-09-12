@@ -244,7 +244,7 @@ endfunction
 function s:trie_match(key)
   let l:node = agda#input#trie#get()
   let l:match = ''
-  let l:candidates = l:node[1]
+  let l:candidates = l:node[0]
   for l:i in range(strchars(a:key))
     let l:char = strcharpart(a:key, l:i, 1)
     if !has_key(l:node[0], l:char)
