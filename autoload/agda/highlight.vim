@@ -132,6 +132,7 @@ let s:atoms_all = [
   \ 'macro',
   \ 'record',
   \ 'dotted',
+  \ 'dottedpattern',
   \ 'operator',
   \ 'error',
   \ 'unsolvedmeta',
