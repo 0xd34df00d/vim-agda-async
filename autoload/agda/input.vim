@@ -24,14 +24,14 @@ function agda#input#activate()
     autocmd InsertLeave <buffer> call s:commit()
   augroup END
 
-  inoremap <buffer><silent> \ <C-\><C-O>:call <SID>start()<CR>\
+  exe 'inoremap <buffer><silent> ' . g:AgdaSymbolPrefix . ' <C-\><C-O>:call <SID>start()<CR>' . g:AgdaSymbolPrefix
 
   hi def agda_input_pending term=underline cterm=underline gui=underline
   hi def link agda_input_matched Underlined
 endfunction
 
 function agda#input#map(source, targets)
-  call s:trie_add('\' . a:source, a:targets)
+  call s:trie_add('`' . a:source, a:targets)
 endfunction
 
 let s:state = {'started': v:false}

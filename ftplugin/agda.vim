@@ -15,6 +15,10 @@
 " You should have received a copy of the GNU General Public License
 " along with vim-agda-async.  If not, see <https://www.gnu.org/licenses/>.
 
+if !exists('g:AgdaSymbolPrefix')
+  let g:AgdaSymbolPrefix = "<LocalLeader>"
+endif
+
 if !exists('g:AgdaResponseHeight')
   let g:AgdaResponseHeight = '7'
 endif
