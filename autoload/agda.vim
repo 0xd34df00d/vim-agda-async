@@ -68,10 +68,14 @@ function agda#metas()
   call s:send_command(['Cmd_metas'])
 endfunction
 
+function s:quote(param)
+  return '"' . a:param . '"'
+endfunction
+
 function agda#show_module_contents_toplevel(rewrite)
   let l:module_name = input('Module name: ')
   call s:send_command(
-    \ ['Cmd_show_module_contents_toplevel', a:rewrite, l:module_name])
+    \ ['Cmd_show_module_contents_toplevel', a:rewrite, s:quote(l:module_name)])
 endfunction
 
 function agda#search_about_toplevel(rewrite)
@@ -91,13 +95,13 @@ endfunction
 function agda#infer_toplevel(rewrite)
   let l:expression = input('Expression: ')
   call s:send_command(
-    \ ['Cmd_infer_toplevel', a:rewrite, l:expression])
+    \ ['Cmd_infer_toplevel', a:rewrite, s:quote(l:expression)])
 endfunction
 
 function agda#compute_toplevel(compute_mode)
   let l:expression = input('Expression: ')
   call s:send_command(
-    \ ['Cmd_compute_toplevel', a:compute_mode, l:expression])
+    \ ['Cmd_compute_toplevel', a:compute_mode, s:quote(l:expression)])
 endfunction
 
 function agda#why_in_scope_toplevel()
@@ -195,7 +199,7 @@ endfunction
 function agda#solve_maybe_all(rewrite)
   call s:goal_command(
     \ ['Cmd_solveOne', a:rewrite],
-    \ function('agda#solveAll', a:rewrite))
+    \ function('agda#solveAll', [a:rewrite]))
 endfunction
 
 function agda#auto_maybe_all()
@@ -205,7 +209,7 @@ endfunction
 function agda#infer_maybe_toplevel(rewrite)
   call s:goal_command(
     \ ['Cmd_infer', a:rewrite],
-    \ function('agda#infer_toplevel', a:rewrite))
+    \ function('agda#infer_toplevel', [a:rewrite]))
 endfunction
 
 function agda#why_in_scope_maybe_toplevel()
@@ -217,13 +221,13 @@ endfunction
 function agda#show_module_contents_maybe_toplevel(rewrite)
   call s:goal_command(
     \ ['Cmd_show_module_contents', a:rewrite],
-    \ function('agda#show_module_contents_toplevel', a:rewrite))
+    \ function('agda#show_module_contents_toplevel', [a:rewrite]))
 endfunction
 
 function agda#compute_maybe_toplevel(compute_mode)
   call s:goal_command(
     \ ['Cmd_compute', a:compute_mode],
-    \ function('agda#compute_toplevel', a:compute_mode))
+    \ function('agda#compute_toplevel', [a:compute_mode]))
 endfunction
 
 function s:goal_command(cmd, ...)
@@ -239,7 +243,7 @@ function s:goal_command(cmd, ...)
     \ ])
   elseif a:0 > 0
     " call the second argument if not in a goal
-    call a:1()
+    call call(a:1, [])
   else
     echohl ErrorMsg
     echom 'For this command, please place the cursor in a goal'
